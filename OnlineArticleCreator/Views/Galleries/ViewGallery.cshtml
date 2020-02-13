@@ -1,0 +1,21 @@
+﻿@model OnlineArticleCreator.Models.Gallery;
+
+@{
+    ViewData["Title"] = "View Gallery";
+}
+
+@{ 
+    string userName = ViewBag.userName;
+    string headerMessage = userName + "'s Gallery";
+    <h1>@headerMessage</h1>
+}
+
+@using OnlineArticleCreator.Utils;
+@foreach (var article in Model.Articles)
+{
+    // Set up the article name
+    var fullArticle = ArticleReader.ReadArticleFromDisk(article.FilePath);
+    <a asp-area="" asp-controller="Galleries" asp-action="ViewArticle" asp-route-id="@fullArticle.ID">@fullArticle.Name</a> <br />
+}
+
+

@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Microsoft.AspNetCore.Http
+<div class="text-center">
+    @{
+        string userName = Context.Session.GetString("userName");
+        bool loggedIn = !string.IsNullOrEmpty(userName);
+
+        string welcomeMessage = "Welcome to OnlineArticleCreator";
+
+        if (loggedIn)
+        {
+            welcomeMessage += ", " + userName;
+        }
+        
+        welcomeMessage += "!";
+        
+        <h1 class="display-4">@welcomeMessage</h1>
+    }
+    <p>
+        This is a website where you can create an account,
+        and write and save articles to your own personal gallery for the world to see.
+    </p>
+</div>
+
+
