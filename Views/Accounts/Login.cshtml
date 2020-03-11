@@ -1,0 +1,87 @@
+﻿@model OnlineArticleCreator.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .login-header {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .login-subheader {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .height-350px {
+        height: 350px;
+    }
+
+    .width-350px {
+        width: 350px;
+    }
+
+    .somewhat-rounded {
+        border-radius: 25%;
+    }
+
+    .width-200px {
+        width: 200px;
+    }
+
+    
+</style>
+
+@{
+    var textboxClass = new { @class = "width-200px bg-dark text-light rounded" };
+}
+
+<link rel="stylesheet" href="~/css/arrows.css" />
+
+<div class="container-fluid border border-light text-light somewhat-rounded text-center width-350px bg-secondary">
+    <form asp-action="Login">
+        <div class="row py-2">
+            <!--Header-->
+            <div class="col d-flex justify-content-center login-header">
+                <p1>Login</p1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center login-subheader">
+                <div class="form-group ">
+                    <label asp-for="UserNameOrEmail" class="control-label border border-light width-200px "></label>
+                    <br />
+
+                    @Html.TextBoxFor(m => m.UserNameOrEmail, textboxClass)
+                    <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center login-subheader">
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label border border-light width-200px"></label>
+                    <br />
+                    @Html.PasswordFor(m => m.Password, textboxClass)
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="form-group">
+                    <input type="submit" value="Login" asp-action="Login"
+                           class="btn btn-primary border border-light width-200px" />
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

@@ -1,0 +1,79 @@
+﻿@model OnlineArticleCreator.Models.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile Editing";
+}
+<style>
+    #saved-changes
+    {
+        font-size: 36px;
+        font-family: Garamond;
+        font-weight: 700;
+    }
+
+</style>
+<div class="container">
+
+    <div id="formContents" class="d-flex flex-column align-items-center">
+
+        <h1>Profile Editing</h1>
+
+        @{
+            var formClass = new { @class = "flex-column rounded bg-dark text-light border-light" };
+            var textboxClass = new { @class = "rounded bg-dark text-light" };
+        }
+        @using (Html.BeginForm("Edit", "Profiles", FormMethod.Post, formClass))
+        {
+            <div>
+                @Html.LabelFor(pro => pro.FirstName)
+
+            </div>
+
+            <div>
+                @Html.TextBoxFor(pro => pro.FirstName, textboxClass)
+            </div>
+
+            <div>
+                @Html.LabelFor(pro => pro.LastName)
+
+            </div>
+
+            <div class="mb-2">
+                @Html.TextBoxFor(pro => pro.LastName, textboxClass)
+            </div>
+
+            <div>
+                @Html.LabelFor(pro => pro.Email)
+
+            </div>
+
+            <div class="mb-2">
+                @Html.TextBoxFor(pro => pro.Email, textboxClass)
+            </div>
+
+            <div class="my-3">
+                <button formmethod="post"
+                        class="btn btn-primary fa fa-pen"
+                        asp-action="Edit"
+                        asp-controller="Profiles">
+                    Save Changes
+                </button>
+            </div>
+
+        }
+
+        @{
+            if (ViewBag.savedChanges == true)
+            {
+                <p id="saved-changes" class="text-primary">Saved changes!</p>
+            }
+        }
+
+    </div>
+</div>
+
+
+
+
+
+

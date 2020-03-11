@@ -1,0 +1,49 @@
+﻿@model OnlineArticleCreator.Models.ViewModels.ProfileViewModel
+@using Microsoft.AspNetCore.Http
+@using System
+@{
+    string title = Model.UserName + "'s Profile";
+    ViewData["Title"] = title;
+}
+
+<div class="container">
+    <div class="d-flex flex-column align-items-center">
+
+        <h1>@title</h1>
+
+        <h4>
+            @Html.DisplayNameFor(pro => pro.FirstName)
+        </h4>
+        @Html.DisplayFor(pro => pro.FirstName)
+        <br /> <br />
+        <h4>
+            @Html.DisplayNameFor(pro => pro.LastName)
+        </h4>
+        @Html.DisplayFor(pro => pro.LastName)
+
+        <!-- TODO: Display the user's latest three articles, each in their own fancy buttons.-->
+
+        <br /> <br />
+        <!-- TODO: Let user edit the profile if it belongs to them.-->
+        @{
+            var userName = Context.Session.GetString("userName");
+            bool loggedIn = !string.IsNullOrEmpty(userName);
+
+            if (loggedIn && Model.UserName == userName)
+            {
+                // Add edit button here
+                var routeVals = new { userName = userName };
+
+                @using (Html.BeginForm("Edit", "Profiles", FormMethod.Get, routeVals))
+                {
+                    <button asp-action="Edit" asp-controller="Profiles" 
+                            class="btn btn-primary fa fa-pen rounded">Edit Profile</button>
+
+                }
+            }
+        }
+
+    </div>
+
+
+</div>

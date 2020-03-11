@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model OnlineArticleCreator.Models.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Http
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'
+      type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet'
+      type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet'
+      type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet'
+      type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Garamond' rel='stylesheet'
+      type='text/css'>
+
+
+<style>
+    #below-title {
+        height: 300px;
+    }
+
+    #controls-or-links-bg {
+        border-radius: 20%;
+    }
+
+    #login-controls-or-links {
+        border-radius: 20%;
+    }
+
+    .login-header {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .login-subheader {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .somewhat-rounded {
+        border-radius: 25%;
+    }
+
+    .height-350px {
+        height: 350px;
+    }
+
+    .redundant-links {
+        font-size: 24px;
+        font-family: Garamond, monospace;
+    }
+
+    .fancy-font {
+        font-family: Lobster, monospace;
+    }
+
+</style>
+
+<div class="container-fluid bg-dark text-light">
+    <!--Welcome message-->
+    <div class="d-flex flex-row">
+        <div class="col-md text-center">
+            @{
+                string userName = Context.Session.GetString("userName");
+                bool loggedIn = !string.IsNullOrEmpty(userName);
+
+                string welcomeStart = "Welcome to ";
+                string inFancyFont = "OnlineArticleCreator";
+                string endOfMessage = "!";
+
+                if (loggedIn)
+                {
+                    inFancyFont += ", ";
+                    endOfMessage = userName + endOfMessage;
+                }
+                else
+                {
+                    inFancyFont += endOfMessage;
+                    endOfMessage = "";
+                }
+
+                <span class="display-4">
+                    @welcomeStart <span class="fancy-font">@inFancyFont</span>@endOfMessage
+                </span>
+            }
+        </div>
+
+    </div>
+
+    <!--Site explanation and (when applicable) login controls and links-->
+    <div id="below-title" class="d-flex flex-sm-column flex-md-row mt-1 height-350px my-4">
+        @{ 
+            var explanationClassRow = "text-center w-50";
+            var explanationClassColumn = "text-center";
+        }
+        <div id="site-explanation" class="text-center">
+            <p>
+                This is a website where you can create an account,
+                and write and save articles to your own personal gallery for the world to see.
+            </p>
+        </div>
+        <div id="login-controls-or-links" class="bg-secondary 
+                 border border-dark height-350px d-flex flex-column">
+            @{
+                if (!loggedIn)
+                {
+                    <form asp-controller="Accounts" class="d-flex height-350px flex-column
+                    align-items-center justify-content-start">
+                        <label class="login-header
+                        text-light rounded text-center my-3">Login</label>
+
+                        <label asp-for="UserNameOrEmail" class="login-subheader
+                        text-light border border-dark rounded px-3"></label>
+
+                        @{
+                            var textboxClass = new { @class = "w-75 rounded bg-dark text-light border-light" };
+                        }
+
+                        @Html.TextBoxFor(m => m.UserNameOrEmail, textboxClass)
+
+                        <label asp-for="Password" class="login-subheader border border-dark
+                        text-light rounded mt-3 px-3"></label>
+                        @Html.TextBoxFor(m => m.Password, textboxClass)
+
+                                    
+                    <div class="mt-3" id="buttons">
+                        <button type="submit" asp-controller="Accounts" asp-action="Login"
+                                class="btn btn-primary rounded border
+                            border-dark fa fa-2x fa-sign-in-alt mx-4">
+                            Login
+                        </button>
+
+                        <button type="submit" formmethod="get" value="Sign Up" asp-controller="Accounts" asp-action="SignUp"
+                                class="align-self-end btn btn-primary rounded border
+    border-dark fa fa-2x fa-smile mx-4">
+                            Sign Up
+                        </button>
+                    </div>
+                    </form>
+
+                }
+                else
+                {
+
+                    <div class="my-4 py-4 redundant-links d-flex flex-column align-items-center">
+                        <a class="text-light" asp-area="" asp-controller="Galleries" asp-action="ViewGallery"><i class="fa fa-list"></i> Your Gallery</a>
+                        <a class="nav-link text-light" asp-area="" asp-controller="Articles" asp-action="Create"><i class="fa fa-pen"></i> Create New Article</a>
+                        <a class="nav-link text-light" asp-area="" asp-controller="Profiles" asp-action="Index" asp-route-userName="@userName"><i class="fa fa-smile"></i> Your Profile</a>
+                        <a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Logout"><i class="fa fa-door-open"></i> Logout</a>
+                    </div>
+                }
+            }
+    </div>
+    </div>
+
+
+
+</div>
+
